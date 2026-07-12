@@ -11,6 +11,7 @@ from .models import Character, Conversation, Message, User, WeChatBinding
 from .prompt import build_system_prompt
 from .schemas import AuthIn, CharacterIn, CharacterOut, ChatIn
 from .security import create_token, current_user, encrypt_secret, hash_password, verify_password
+from .wechat_openclaw import ensure_wechat_worker, mark_binding_connected
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("theone")
@@ -18,7 +19,9 @@ app = FastAPI(title="TheOne Companion API", version="0.1.0")
 app.add_middleware(CORSMiddleware, allow_origins=[settings.frontend_url, "http://127.0.0.1:3100"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 @app.on_event("startup")
-def startup(): Base.metadata.create_all(engine)
+async def startup():
+    Base.metadata.create_all(engine)
+    ensure_wechat_worker()
 
 @app.get("/api/health")
 def health(): return {"status": "ok", "wechat_adapter": settings.wechat_adapter, "llm_configured": bool(settings.llm_api_key)}
@@ -77,13 +80,16 @@ async def wechat_activate(cid: str, user: User = Depends(current_user), db: Sess
 async def activation_status(sid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     b = db.scalar(select(WeChatBinding).where(WeChatBinding.session_id == sid, WeChatBinding.user_id == user.id))
     if not b: raise HTTPException(404, "绑定会话不存在")
+    if b.binding_status == "connected":
+        return {"session_id": sid, "status": "connected"}
     result = await get_wechat_adapter().check_login_status(sid, b.poll_count); b.poll_count += 1; b.binding_status = result["status"]
     if result["status"] == "connected":
-        b.wechat_bot_id=result.get("wechat_bot_id",""); b.wechat_user_id=result.get("wechat_user_id",""); b.encrypted_bot_token=encrypt_secret(result.get("bot_token",""))
+        mark_binding_connected(db, b, result)
         c = owned_character(b.character_id, user, db)
         for other in db.scalars(select(Character).where(Character.user_id == user.id)): other.status="inactive"
         c.status="active"
-    db.commit(); return {"session_id": sid, "status": b.binding_status}
+        ensure_wechat_worker()
+    db.commit(); return {"session_id": sid, "status": b.binding_status, "message": result.get("message", "")}
 
 @app.post("/api/characters/{cid}/wechat/deactivate")
 def wechat_deactivate(cid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):

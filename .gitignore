@@ -1,5 +1,7 @@
 node_modules/
 .next/
+.logs/
+.runtime/
 .venv/
 __pycache__/
 *.pyc

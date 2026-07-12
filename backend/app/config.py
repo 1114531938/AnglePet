@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     wechat_adapter: str = "mock"
     openclaw_base_url: str = "http://openclaw-weixin:8080"
     openclaw_token: str = ""
+    openclaw_home: str = "D:\\OpenClawRuntime\\home"
+    wechat_poll_enabled: bool = True
     frontend_url: str = "http://localhost:3100"
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

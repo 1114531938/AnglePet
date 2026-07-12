@@ -45,7 +45,7 @@ AnglePet 参考长期 AI 陪伴产品的体验方式，实现了从“创建角�
 
 因此，克隆项目后即使没有模型 Key、微信凭据或 PostgreSQL，也能运行和体验核心功能。
 
-> 微信真实接入仅预留腾讯官方 `openclaw-weixin` Adapter，不使用微信 Hook、模拟点击、PC 微信自动化或非官方机器人框架。
+> 微信真实接入使用腾讯官方 `openclaw-weixin` / iLink 协议，不使用微信 Hook、模拟点击、PC 微信自动化或非官方机器人框架。
 
 ## ✨ 功能介绍
 
@@ -117,7 +117,7 @@ Prompt 同时包含自然交流、长度控制、沉浸感和高风险话题安�
 - 独立 `WeChatAdapter` 隔离业务逻辑与具体微信插件。
 - 提供：
   - `MockWeChatAdapter`：本地演示扫码流程。
-  - `OpenClawWeChatAdapter`：对接官方 `openclaw-weixin` HTTP 服务。
+  - `OpenClawWeChatAdapter`：对接官方 `openclaw-weixin` / iLink 二维码登录、消息拉取和文本发送。
 - 微信 Bot Token 加密后入库，不写入日志。
 
 ### 7. 响应式产品界面
@@ -472,8 +472,10 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
 | `LLM_API_KEY` | 空 | 模型 Key；为空时启用 Mock 回复 |
 | `LLM_DEFAULT_MODEL` | `gpt-4o-mini` | 默认模型名称 |
 | `WECHAT_ADAPTER` | `mock` | `mock` 或 `openclaw` |
-| `OPENCLAW_BASE_URL` | `http://openclaw-weixin:8080` | 官方微信插件服务地址 |
-| `OPENCLAW_TOKEN` | 空 | 官方插件访问令牌 |
+| `OPENCLAW_BASE_URL` | `https://ilinkai.weixin.qq.com` | 官方 iLink API 根地址 |
+| `OPENCLAW_TOKEN` | 空 | 预留字段；当前 iLink 模式会在扫码后保存 Bot Token |
+| `OPENCLAW_HOME` | `D:\OpenClawRuntime\home` | OpenClaw 状态目录，用于保存微信账号凭据 |
+| `WECHAT_POLL_ENABLED` | `true` | 是否启动后端微信消息轮询 Worker |
 | `FRONTEND_URL` | `http://localhost:3100` | 允许跨域访问的前端地址 |
 
 Fernet Key 生成方式：
@@ -532,23 +534,21 @@ WECHAT_ADAPTER=mock
 
 ### 官方 OpenClaw 模式
 
-1. 单独部署腾讯官方允许的 `openclaw-weixin` 插件或服务。
+1. 安装腾讯官方允许的 `openclaw-weixin` 插件或准备同等 iLink 凭据存储目录。
 2. 配置：
 
 ```dotenv
 WECHAT_ADAPTER=openclaw
-OPENCLAW_BASE_URL=https://你的-openclaw-服务地址
-OPENCLAW_TOKEN=你的插件访问令牌
+OPENCLAW_BASE_URL=https://ilinkai.weixin.qq.com
+OPENCLAW_HOME=D:\OpenClawRuntime\home
+WECHAT_POLL_ENABLED=true
 TOKEN_ENCRYPTION_KEY=固定的Fernet密钥
 ```
 
-3. 根据部署版本核对 `backend/app/adapters.py` 中三个 HTTP 路径：
-   - 创建登录二维码
-   - 查询授权状态
-   - 发送文本消息
-4. 重启后端并检查 `/api/health` 中的 `wechat_adapter` 是否为 `openclaw`。
+3. 重启后端并检查 `/api/health` 中的 `wechat_adapter` 是否为 `openclaw`。
+4. 在角色详情页点击“连接微信”或“重新连接微信”，前端会展示真实微信二维码。扫码确认后，后端会保存 Bot Token，并通过 `getupdates` / `sendmessage` 拉取和回复微信消息。
 
-官方插件不同版本可能具有不同的 HTTP 路径和字段名，因此 Adapter 保留为单独模块，修改插件映射不需要改动角色或对话业务代码。
+官方插件不同版本可能具有不同的字段名，因此微信协议映射保留在 `backend/app/wechat_openclaw.py`，修改插件映射不需要改动角色或对话业务代码。
 
 ## 📡 API 文档
 
@@ -643,7 +643,7 @@ docker compose down -v
 
 ### 7. 为什么真实微信扫码没有工作？
 
-默认是 Mock Adapter。真实模式需要部署官方插件、配置 Token，并按照插件版本核对 Adapter 的 API 路径。项目不会尝试使用任何非官方微信接入方式。
+默认是 Mock Adapter。真实模式需要将 `WECHAT_ADAPTER` 设置为 `openclaw`，配置可写的 `OPENCLAW_HOME`，并确保没有其他 OpenClaw Gateway 同时消费同一个微信消息流。项目不会尝试使用任何非官方微信接入方式。
 
 ## 🗺️ 当前边界与后续规划
 
