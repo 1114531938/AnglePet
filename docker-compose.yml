@@ -1,0 +1,31 @@
+services:
+  frontend:
+    build: ./frontend
+    ports: ["3100:3100"]
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+      PORT: 3100
+    depends_on: [backend]
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://pet:pet@postgres:5432/pet
+      JWT_SECRET: ${JWT_SECRET:-change-this-secret}
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_DEFAULT_MODEL: ${LLM_DEFAULT_MODEL:-gpt-4o-mini}
+      WECHAT_ADAPTER: ${WECHAT_ADAPTER:-mock}
+      OPENCLAW_BASE_URL: ${OPENCLAW_BASE_URL:-http://openclaw-weixin:8080}
+      OPENCLAW_TOKEN: ${OPENCLAW_TOKEN:-}
+      FRONTEND_URL: http://localhost:3100
+    depends_on:
+      postgres: {condition: service_healthy}
+  postgres:
+    image: postgres:16-alpine
+    environment: {POSTGRES_USER: pet, POSTGRES_PASSWORD: pet, POSTGRES_DB: pet}
+    volumes: ["pet_data:/var/lib/postgresql/data"]
+    healthcheck: {test: ["CMD-SHELL", "pg_isready -U pet"], interval: 5s, timeout: 5s, retries: 10}
+  redis:
+    image: redis:7-alpine
+volumes: {pet_data: {}}
