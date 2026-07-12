@@ -1,6 +1,6 @@
 <div align="center">
 
-# 有一 · AnglePet
+# AnglePet
 
 **一个可以创建专属 AI 角色，并通过微信持续陪伴用户的全栈 MVP。**
 
