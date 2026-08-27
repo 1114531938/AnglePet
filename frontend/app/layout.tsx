@@ -1,4 +1,20 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import BrowserClass from "./browser-class";
 import "./globals.css";
-export const metadata: Metadata = { title: "有一 · AI 陪伴", description: "让你的 AI 角色真正住进微信里" };
-export default function Layout({children}:{children:React.ReactNode}) { return <html lang="zh-CN"><body>{children}</body></html> }
+
+export const metadata: Metadata = {
+  title: "AnglePet - 宠物对话与陪伴",
+  description: "领养一只会说话、会记得你、能在微信里陪你的数字宠物。",
+};
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <BrowserClass />
+        {children}
+      </body>
+    </html>
+  );
+}

@@ -17,7 +17,7 @@ from sqlalchemy.orm import Session
 from .config import settings
 from .database import SessionLocal
 from .llm import OpenAICompatibleProvider
-from .models import Character, Conversation, Message, WeChatBinding
+from .models import Character, CharacterMemory, Conversation, Message, WeChatBinding
 from .prompt import build_system_prompt
 from .security import encrypt_secret
 
@@ -54,7 +54,12 @@ def _base_info() -> dict[str, str]:
 
 async def _post_json(base_url: str, endpoint: str, body: dict[str, Any], token: str = "", timeout: float = 20) -> dict[str, Any]:
     async with httpx.AsyncClient(timeout=timeout) as client:
-        response = await client.post(f"{base_url.rstrip('/')}/{endpoint}", headers=_headers(token), json=body)
+        raw_body = json.dumps(body, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        response = await client.post(
+            f"{base_url.rstrip('/')}/{endpoint}",
+            headers=_headers(token),
+            content=raw_body,
+        )
         response.raise_for_status()
         return response.json()
 
@@ -196,18 +201,32 @@ async def send_text_message(binding: WeChatBinding, receiver_id: str, text: str,
     token, base_url = _load_token(binding.wechat_bot_id)
     if not token:
         raise RuntimeError("No WeChat token found for binding")
+    client_id = f"anglepet-{uuid.uuid4().hex}"
     payload = {
         "msg": {
+            "from_user_id": "",
             "to_user_id": receiver_id,
-            "context_token": context_token,
+            "client_id": client_id,
+            "message_type": 2,
+            "message_state": 2,
             "item_list": [{"type": 1, "text_item": {"text": text}}],
+            **({"context_token": context_token} if context_token else {}),
         },
         "base_info": _base_info(),
     }
     result = await _post_json(base_url, "ilink/bot/sendmessage", payload, token=token, timeout=15)
+    log.info(
+        "sendmessage binding=%s to=%s client=%s context=%s ret=%s errmsg=%s",
+        binding.id,
+        receiver_id,
+        client_id,
+        "yes" if context_token else "no",
+        result.get("ret"),
+        result.get("errmsg"),
+    )
     if result.get("ret") not in (None, 0):
         raise RuntimeError(f"sendmessage ret={result.get('ret')} errmsg={result.get('errmsg')}")
-    return {"ok": True}
+    return {"ok": True, "message_id": client_id}
 
 
 async def _reply_to_wechat_message(db: Session, binding: WeChatBinding, character: Character, msg: dict[str, Any], text: str) -> None:
@@ -241,30 +260,28 @@ async def _reply_to_wechat_message(db: Session, binding: WeChatBinding, characte
     recent = list(db.scalars(
         select(Message).where(Message.conversation_id == conv.id).order_by(Message.created_at.desc()).limit(12)
     ))[::-1]
-    prompt = [{"role": "system", "content": build_system_prompt(character)}] + [
+    memories = list(db.scalars(
+        select(CharacterMemory)
+        .where(
+            CharacterMemory.character_id == character.id,
+            CharacterMemory.user_id == binding.user_id,
+        )
+        .order_by(
+            CharacterMemory.is_pinned.desc(),
+            CharacterMemory.importance.desc(),
+            CharacterMemory.updated_at.desc(),
+        )
+        .limit(12)
+    ))
+    prompt = [{"role": "system", "content": build_system_prompt(character, memories)}] + [
         {"role": "assistant" if item.sender_type == "assistant" else "user", "content": item.content}
         for item in recent
+        if not item.content.startswith("__ANGLEPET_STICKER__:")
     ]
     try:
         out = await OpenAICompatibleProvider().chat(prompt, character.model_name, character.temperature)
-        reply = Message(
-            conversation_id=conv.id,
-            user_id=binding.user_id,
-            character_id=character.id,
-            sender_type="assistant",
-            channel="wechat",
-            content=out["content"],
-            context_token=msg.get("context_token") or "",
-            model_name=out["model"],
-            input_tokens=out["input_tokens"],
-            output_tokens=out["output_tokens"],
-            latency_ms=out["latency_ms"],
-        )
-        db.add(reply)
-        await send_text_message(binding, msg.get("from_user_id", ""), out["content"], msg.get("context_token") or "")
-        db.commit()
     except Exception as exc:
-        log.exception("Failed to reply to WeChat message")
+        log.exception("Failed to generate WeChat reply")
         db.add(Message(
             conversation_id=conv.id,
             user_id=binding.user_id,
@@ -276,6 +293,34 @@ async def _reply_to_wechat_message(db: Session, binding: WeChatBinding, characte
             error=str(exc)[:500],
         ))
         db.commit()
+        return
+
+    reply = Message(
+        conversation_id=conv.id,
+        user_id=binding.user_id,
+        character_id=character.id,
+        sender_type="assistant",
+        channel="wechat",
+        content=out["content"],
+        context_token=msg.get("context_token") or "",
+        model_name=out["model"],
+        input_tokens=out["input_tokens"],
+        output_tokens=out["output_tokens"],
+        latency_ms=out["latency_ms"],
+    )
+    db.add(reply)
+    try:
+        await send_text_message(
+            binding,
+            msg.get("from_user_id", ""),
+            out["content"],
+            msg.get("context_token") or "",
+        )
+    except Exception as exc:
+        log.exception("Failed to send WeChat reply")
+        reply.status = "failed"
+        reply.error = str(exc)[:500]
+    db.commit()
 
 
 def _extract_text(msg: dict[str, Any]) -> str:
@@ -292,8 +337,12 @@ async def _poll_binding(binding_id: str) -> None:
         binding = db.get(WeChatBinding, binding_id)
         if not binding or binding.binding_status != "connected":
             return
+        character = db.get(Character, binding.character_id)
+        if not character or character.status != "active":
+            return
         token, base_url = _load_token(binding.wechat_bot_id)
         if not token:
+            log.warning("skip connected binding without token binding=%s bot=%s", binding.id, binding.wechat_bot_id)
             return
         result = await _post_json(base_url, "ilink/bot/getupdates", {
             "get_updates_buf": binding.last_sync_cursor or "",
@@ -304,10 +353,6 @@ async def _poll_binding(binding_id: str) -> None:
             return
         log.info("getupdates binding=%s msgs=%s", binding.id, len(result.get("msgs") or []))
         binding.last_sync_cursor = result.get("get_updates_buf") or binding.last_sync_cursor
-        character = db.get(Character, binding.character_id)
-        if not character:
-            db.commit()
-            return
         for msg in result.get("msgs") or []:
             if msg.get("message_type") == 2:
                 continue
@@ -354,3 +399,9 @@ def mark_binding_connected(db: Session, binding: WeChatBinding, result: dict[str
     binding.api_base_url = result.get("api_base_url") or ILINK_BASE_URL
     if result.get("bot_token"):
         binding.encrypted_bot_token = encrypt_secret(result["bot_token"])
+    for other in db.scalars(select(WeChatBinding).where(
+        WeChatBinding.user_id == binding.user_id,
+        WeChatBinding.id != binding.id,
+        WeChatBinding.binding_status == "connected",
+    )):
+        other.binding_status = "disconnected"

@@ -1,3 +1,76 @@
 "use client";
-import { useState } from "react"; import { useRouter } from "next/navigation"; import Link from "next/link"; import { ArrowRight, Sparkles } from "lucide-react"; import { request } from "@/lib/api";
-export default function Login(){const [register,setRegister]=useState(false),[username,setUsername]=useState(""),[password,setPassword]=useState(""),[error,setError]=useState(""),[loading,setLoading]=useState(false);const router=useRouter();async function submit(e:React.FormEvent){e.preventDefault();setLoading(true);setError("");try{const d=await request(`/auth/${register?"register":"login"}`,{method:"POST",body:JSON.stringify({username,password})});localStorage.setItem("token",d.access_token);localStorage.setItem("username",d.username);router.push("/console")}catch(e){setError((e as Error).message)}finally{setLoading(false)}}return <main className="auth"><Link href="/" className="brand"><i>一</i><span>有一<small>AI 陪伴</small></span></Link><div className="auth-card"><div className="auth-copy"><div className="eyebrow"><Sparkles size={14}/> 你与 TA 的故事，从这里开始</div><h1>{register?"创造一个新的世界":"欢迎回来"}</h1><p>{register?"一个账号，一段只属于你的长期关系。":"TA 还记得你们上次聊到哪里。"}</p></div><form onSubmit={submit}><label>用户名<input value={username} onChange={e=>setUsername(e.target.value)} placeholder="至少 3 个字符" required/></label><label>密码<input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="至少 6 个字符" required/></label>{error&&<p className="error">{error}</p>}<button className="btn full" disabled={loading}>{loading?"请稍候…":register?"注册并开始":"进入我的世界"}<ArrowRight size={17}/></button></form><p className="switch">{register?"已经有账号？":"第一次来到这里？"}<button onClick={()=>{setRegister(!register);setError("")}}>{register?"直接登录":"创建账号"}</button></p></div><p className="legal">继续即表示你同意服务条款与隐私政策</p></main>}
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ArrowRight, CheckCircle2, PawPrint, ShieldCheck } from "lucide-react";
+import { request, saveAuth } from "@/lib/api";
+
+const authVideo =
+  "https://videos.pexels.com/video-files/8489216/8489216-hd_1920_1080_30fps.mp4";
+
+export default function Login() {
+  const [register, setRegister] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  async function submit(event: React.FormEvent) {
+    event.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const data = await request(`/auth/${register ? "register" : "login"}`, {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+      });
+      saveAuth(data.access_token, data.username);
+      router.push("/console");
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className="auth-screen">
+      <video className="auth-video" src={authVideo} autoPlay muted loop playsInline />
+      <div className="auth-shade" />
+      <Link href="/" className="brand auth-brand">
+        <span className="brand-mark"><PawPrint size={19} /></span>
+        <span>AnglePet</span>
+      </Link>
+
+      <section className="auth-card-new compact">
+        <form onSubmit={submit} className="auth-panel">
+          <p className="kicker"><ShieldCheck size={15} /> Secure access</p>
+          <h2>{register ? "创建宠物屋账号" : "欢迎回来"}</h2>
+          <p>{register ? "创建账号后即可领养宠物并连接微信。" : "登录后继续陪伴你的 AnglePet。"}</p>
+          <label>
+            用户名
+            <input value={username} onChange={(e) => setUsername(e.target.value)} minLength={3} required />
+          </label>
+          <label>
+            密码
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={3} required />
+          </label>
+          {error && <div className="form-error">{error}</div>}
+          <button className="primary-btn full" disabled={loading}>
+            {loading ? "处理中..." : register ? "注册并进入宠物屋" : "进入宠物屋"} <ArrowRight size={18} />
+          </button>
+          <button type="button" className="text-switch" onClick={() => { setRegister(!register); setError(""); }}>
+            {register ? "已有账号，去登录" : "第一次使用，创建账号"}
+          </button>
+        </form>
+        <div className="auth-points">
+          <span><CheckCircle2 size={16} /> 真实微信扫码</span>
+          <span><CheckCircle2 size={16} /> 宠物记忆保存</span>
+          <span><CheckCircle2 size={16} /> 微信持续陪聊</span>
+        </div>
+      </section>
+    </main>
+  );
+}

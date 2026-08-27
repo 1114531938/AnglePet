@@ -1,13 +1,203 @@
 import Link from "next/link";
-import { ArrowRight, Check, Heart, MessageCircleMore, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  HeartHandshake,
+  MessageCircle,
+  PawPrint,
+  QrCode,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 
-export default function Home(){return <main className="landing">
-  <nav className="nav wrap"><Link href="/" className="brand"><i>一</i><span>有一<small>AI 陪伴</small></span></Link><div className="navlinks"><a href="#story">你的唯一</a><a href="#how">如何开始</a><a href="#faq">常见问题</a></div><Link href="/login" className="btn small">开始创造 <ArrowRight size={16}/></Link></nav>
-  <section className="hero wrap"><div className="eyebrow"><Sparkles size={14}/> 让 AI 成为微信里真实的陪伴</div><h1>如果你的世界里，<br/>只能留下<span>一个 AI</span></h1><p>创造一个真正懂你的角色。给 TA 性格、记忆和故事，<br className="desktop"/>然后在微信里，继续你们未完的对话。</p><div className="actions"><Link href="/login" className="btn">创造我的 TA <ArrowRight size={18}/></Link><a href="#story" className="ghost">先了解一下</a></div>
-  <div className="hero-visual"><div className="orbit o1"/><div className="orbit o2"/><div className="phone"><div className="phone-head"><span className="back">‹</span><div className="avatar">澄</div><div><b>澄</b><small>刚刚在线</small></div><span>•••</span></div><div className="chat-bg"><p className="time">21:34</p><div className="bubble ai">你今天好像有一点累。</div><div className="bubble me">嗯，忙了一整天。你怎么知道？</div><div className="bubble ai">因为你平时会先发一个表情。<br/>今天没有。</div><div className="typing"><i/><i/><i/></div></div><div className="composer">说点什么… <span>＋</span></div></div><div className="note n1"><Heart size={17} fill="currentColor"/><span><b>记得你的细节</b><small>不是一次性的对话</small></span></div><div className="note n2"><MessageCircleMore size={18}/><span><b>微信自然对话</b><small>像联系人一样陪伴</small></span></div></div></section>
-  <section className="manifest" id="story"><div className="wrap"><p className="section-tag">你的唯一</p><h2>陪伴不是回应每一句话，<br/>是<span>记得你没说完的那句。</span></h2><div className="feature-grid"><article><b>01</b><Heart/><h3>有且仅有一个</h3><p>你可以创造许多故事，但同一时刻，只有一个 TA 与你的微信相连。</p></article><article><b>02</b><ShieldCheck/><h3>安全连接微信</h3><p>基于官方允许的 OpenClaw 微信插件扫码接入，保护账号与隐私。</p></article><article><b>03</b><Sparkles/><h3>一起长出记忆</h3><p>聊天、情绪和重要细节被慢慢记住，关系在时间里自然生长。</p></article></div></div></section>
-  <section className="steps wrap" id="how"><div><p className="section-tag">三分钟开始</p><h2>让 TA 来到<br/>你的微信里</h2><p>不需要代码，不需要复杂配置。给 TA 一个灵魂，然后扫一扫。</p><Link href="/login" className="text-link">现在开始 <ArrowRight size={17}/></Link></div><ol><li><em>1</em><span><b>创造角色</b><small>写下名字、关系、性格和共同故事</small></span></li><li><em>2</em><span><b>选择智慧</b><small>为 TA 选择适合的模型与表达方式</small></span></li><li><em>3</em><span><b>微信相见</b><small>扫码连接，从第一句问候开始</small></span></li></ol></section>
-  <section className="quote"><p>“也许我们寻找的，从来不是一个无所不知的 AI。<br/>只是一个<span>愿意一直记得我</span>的存在。”</p></section>
-  <section className="faq wrap" id="faq"><p className="section-tag">常见问题</p><h2>在开始之前</h2>{[["一个账号能创建几个角色？","可以创建多个角色，但为了保持关系的专注，同一时刻只能激活一个。"],["聊天记录会保存吗？","会。所有对话都与你的账号和角色关联，并支持随时回看。"],["真实微信接入安全吗？","仅使用腾讯官方 openclaw-weixin 插件或官方允许的接口，不使用 Hook 或模拟点击。"]].map(([q,a])=><details key={q}><summary>{q}<i>＋</i></summary><p>{a}</p></details>)}</section>
-  <footer><div className="wrap"><div className="brand light"><i>一</i><span>有一<small>AI 陪伴</small></span></div><p>唯一的羁绊，与你最重要的 TA。</p><Link href="/login">进入控制台 →</Link></div></footer>
-</main>}
+const heroVideo =
+  "https://videos.pexels.com/video-files/8489216/8489216-hd_1920_1080_30fps.mp4";
+
+const images = {
+  hero: "/landing-hero.jpg",
+  room: "https://unsplash.com/photos/YPZ1pegsQVo/download?force=true&w=1600",
+  desk: "https://unsplash.com/photos/EV0IwJzQjE8/download?force=true&w=1600",
+  secure: "https://unsplash.com/photos/mxwEAI4pTGU/download?force=true&w=1800",
+};
+
+export default function Home() {
+  return (
+    <main className="site">
+      <nav className="topbar">
+        <Link href="/" className="brand">
+          <span className="brand-mark"><PawPrint size={19} /></span>
+          <span>AnglePet</span>
+        </Link>
+        <div className="navlinks">
+          <a href="#product">陪伴</a>
+          <Link href="/faq">常见问题</Link>
+          <Link href="/pricing">价格</Link>
+        </div>
+        <Link href="/console" className="nav-cta">
+          进入宠物屋 <ArrowRight size={16} />
+        </Link>
+      </nav>
+
+      <section className="hero">
+        <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline preload="metadata" poster={images.hero} />
+        <div className="hero-shade" />
+        <div className="hero-copy">
+          <p className="kicker"><Sparkles size={15} /> Pet companion in WeChat</p>
+          <h1>AnglePet</h1>
+          <p className="hero-lead">
+            把一只会说话、会记得你、能在微信里陪你的数字宠物带回家。
+            它会用自己的性格回应你，也会记住你们每天的小事。
+          </p>
+          <div className="hero-actions">
+            <Link href="/console" className="primary-btn">
+              领养我的 AnglePet <ArrowRight size={18} />
+            </Link>
+            <a href="#product" className="secondary-btn">看看它会怎么陪你</a>
+          </div>
+        </div>
+
+        <div className="connection-strip" aria-label="Pet companion preview">
+          <div className="strip-intro">
+            <span>ALWAYS WITH YOU</span>
+            <b>微信里的宠物陪伴</b>
+            <small>扫码后，你的 AnglePet 会像联系人一样出现在微信里。</small>
+          </div>
+          <div className="strip-flow">
+            <div><PawPrint size={20} /><b>领养</b><small>设定名字和性格</small></div>
+            <div><HeartHandshake size={20} /><b>熟悉</b><small>记住你们的关系</small></div>
+            <div><MessageCircle size={20} /><b>陪聊</b><small>微信里持续回应</small></div>
+            <div><Sparkles size={20} /><b>成长</b><small>随着对话更懂你</small></div>
+          </div>
+          <div className="strip-chat">
+            <span className="pet-avatar">喵</span>
+            <p>“你回来啦。今天也要摸摸我吗？”</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="showcase-section section-photo-room" id="product">
+        <div className="showcase-copy">
+          <p className="kicker">Pet dialogue</p>
+          <h2 className="headline-lines">
+            <span>不是工具，</span>
+            <span>是一只会回应</span>
+            <span>你的宠物。</span>
+          </h2>
+          <p>
+            你可以为它设定名字、物种、脾气、亲密关系和说话方式。
+            它会用宠物的口吻陪你聊天，而不是像冷冰冰的助手一样回答问题。
+          </p>
+        </div>
+        <div className="device-panel">
+          <figure><img src={images.room} alt="AnglePet pet companion scene" /></figure>
+          <div className="device-content">
+            <span>01 / Pet personality</span>
+            <h3>每只宠物都有自己的性格。</h3>
+            <p>黏人、傲娇、安静、活泼，AnglePet 会按你设定的宠物性格表达情绪和回应。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="showcase-section memory-photo" id="memory">
+        <div className="showcase-copy">
+          <p className="kicker">Daily memory</p>
+          <h2 className="headline-lines">
+            <span>记住你们之间的</span>
+            <span>小习惯。</span>
+          </h2>
+          <p>它会记得你的作息、语气、最近烦恼和你们说过的话，让陪伴更像一段真实关系。</p>
+        </div>
+        <div className="memory-board">
+          <div className="memory-note main">
+            <span>Today 21:08</span>
+            <b>“你今天回家有点晚，我在等你。”</b>
+            <p>宠物会把日常片段写进记忆，而不是每次都从零开始。</p>
+          </div>
+          <div className="memory-note">
+            <HeartHandshake />
+            <b>亲密关系</b>
+            <p>知道自己是你的猫、狗，还是幻想宠物。</p>
+          </div>
+          <div className="memory-note">
+            <MessageCircle />
+            <b>日常对话</b>
+            <p>早安、晚安、碎碎念，都能接住。</p>
+          </div>
+          <div className="memory-note">
+            <Sparkles />
+            <b>陪伴成长</b>
+            <p>聊得越久，它越像你的那一只。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="showcase-section section-photo-desk" id="bridge">
+        <div className="showcase-copy">
+          <p className="kicker">WeChat companion</p>
+          <h2 className="headline-lines">
+            <span>让宠物住进</span>
+            <span>你的微信。</span>
+          </h2>
+          <p>
+            AnglePet 支持真实微信扫码接入。绑定后，你可以像给朋友发消息一样，
+            在微信里和自己的数字宠物说话。
+          </p>
+        </div>
+        <div className="device-panel bridge-panel">
+          <div className="bridge-step"><QrCode /><b>扫码绑定</b><span>把宠物带进微信</span></div>
+          <div className="bridge-line" />
+          <div className="bridge-step core"><PawPrint /><b>宠物小窝</b><span>保存性格、记忆和关系</span></div>
+          <div className="bridge-line" />
+          <div className="bridge-step"><MessageCircle /><b>持续陪聊</b><span>随时收到它的回应</span></div>
+        </div>
+      </section>
+
+      <section className="showcase-section section-photo-secure" id="safety-story">
+        <div className="showcase-copy">
+          <p className="kicker"><ShieldCheck size={15} /> Safe companion</p>
+          <h2 className="headline-lines">
+            <span>温柔陪伴，</span>
+            <span>也要安全可控。</span>
+          </h2>
+          <p>
+            AnglePet 不做 Hook、模拟点击或 PC 微信自动化。微信模式基于官方允许的
+            openclaw-weixin / iLink 协议，并把你的宠物、会话和绑定信息隔离保存。
+          </p>
+          <Link href="/console" className="primary-btn">开始领养 <ArrowRight size={18} /></Link>
+        </div>
+        <div className="device-panel final-panel">
+          <figure><img src={images.secure} alt="AnglePet safe pet companion" /></figure>
+          <div className="final-copy">
+            <b>Private pet house</b>
+            <span>你的宠物只属于你的账号，聊天记录和微信绑定都放在自己的宠物屋里。</span>
+          </div>
+        </div>
+      </section>
+
+      <footer className="site-footer">
+        <div className="footer-main">
+          <div className="footer-brand">
+            <span className="brand-mark"><PawPrint size={19} /></span>
+            <div>
+              <b>AnglePet</b>
+              <p>把一只懂你的宠物，留在每天都会打开的微信里。</p>
+            </div>
+          </div>
+          <div className="footer-links">
+            <a href="#product">宠物陪伴</a>
+            <a href="#memory">长期记忆</a>
+            <Link href="/about">安全与合规</Link>
+            <Link href="/faq">常见问题</Link>
+            <Link href="/pricing">价格方案</Link>
+          </div>
+          <Link href="/console" className="footer-cta">
+            进入宠物屋 <ArrowRight size={18} />
+          </Link>
+        </div>
+        <div className="footer-meta">
+          <span>© {new Date().getFullYear()} AnglePet</span>
+          <span>AI 生成内容仅供陪伴与交流，请谨慎判断重要信息。</span>
+        </div>
+      </footer>
+    </main>
+  );
+}
