@@ -315,7 +315,7 @@ async def upload_avatar(file: UploadFile = File(...), user: User = Depends(curre
         raise HTTPException(400, "头像文件不能超过 8MB")
     filename = f"{user.id}-{uuid4().hex}{suffix}"
     (AVATAR_DIR / filename).write_bytes(content)
-    user.avatar_url = f"http://127.0.0.1:8000/uploads/avatars/{filename}"
+    user.avatar_url = f"/uploads/avatars/{filename}"
     db.commit(); db.refresh(user)
     return user
 

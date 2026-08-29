@@ -1,0 +1,11 @@
+www.anglepet.top {
+    redir https://anglepet.top{uri} permanent
+}
+
+anglepet.top {
+    encode zstd gzip
+
+    @backend path /api/* /uploads/*
+    reverse_proxy @backend backend:8000
+    reverse_proxy frontend:3100
+}

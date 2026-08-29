@@ -468,6 +468,28 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
 
 如果使用多个 Worker，生产数据库必须使用 PostgreSQL，并应将微信拉取任务、重试和幂等锁迁移到独立 Worker/Redis。
 
+#### `anglepet.top` Docker Compose 部署
+
+仓库内提供了 `docker-compose.production.yml` 和 `deploy/Caddyfile`。Caddy 会将
+`anglepet.top` 的 `/api/*`、`/uploads/*` 转发到后端，其余请求转发到前端，并自动申请和续期 HTTPS 证书。
+
+```bash
+git clone https://github.com/1114531938/AnglePet.git /opt/anglepet
+cd /opt/anglepet
+cp .env.production.example .env.production
+```
+
+在 `.env.production` 中替换 `POSTGRES_PASSWORD`、`JWT_SECRET` 和
+`TOKEN_ENCRYPTION_KEY`，再启动：
+
+```bash
+docker compose --env-file .env.production -f docker-compose.production.yml up --build -d
+docker compose --env-file .env.production -f docker-compose.production.yml ps
+```
+
+生产环境只在宿主机开放 `80/443`，前端、后端和 PostgreSQL 仅通过 Docker 内部网络通信。
+模型 API Key 可以在管理员界面配置，不要提交到 Git 仓库。
+
 ## 🔧 环境变量
 
 ### 后端 `backend/.env`
