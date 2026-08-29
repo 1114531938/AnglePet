@@ -504,6 +504,25 @@ nginx -t && systemctl reload nginx
 该模式不会启动 Caddy，前端和后端分别仅监听宿主机的 `127.0.0.1:3200` 与
 `127.0.0.1:8200`，由现有 Nginx 对外提供服务。
 
+#### ICP 备案审核临时页
+
+备案审核期间可以保留内部容器，只将公网入口切换为维护状态：
+
+```bash
+install -d -m 0755 /var/www/anglepet-filing
+install -m 0644 deploy/filing-review.html /var/www/anglepet-filing/index.html
+cp -a /etc/nginx/sites-available/anglepet.top /etc/nginx/sites-available/anglepet.top.live
+install -m 0644 deploy/nginx-anglepet-filing.conf /etc/nginx/sites-available/anglepet.top
+nginx -t && systemctl reload nginx
+```
+
+管局审核通过后恢复正式站点：
+
+```bash
+cp -a /etc/nginx/sites-available/anglepet.top.live /etc/nginx/sites-available/anglepet.top
+nginx -t && systemctl reload nginx
+```
+
 ## 🔧 环境变量
 
 ### 后端 `backend/.env`

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AnglePet - ICP备案审核中</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #10211c;
+      --muted: #66736e;
+      --green: #1e6351;
+      --line: #d8ded9;
+      --paper: #f7f5ef;
+      --white: #fff;
+      --coral: #e9784c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(16, 33, 28, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 33, 28, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 64px 64px;
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    }
+
+    main {
+      width: min(760px, 100%);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 24px 70px rgba(16, 33, 28, 0.10);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 82px;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .mark {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      border-radius: 7px;
+      background: var(--green);
+    }
+
+    .mark::before,
+    .mark::after {
+      position: absolute;
+      content: "";
+      border-radius: 50%;
+      background: var(--white);
+    }
+
+    .mark::before {
+      width: 14px;
+      height: 12px;
+      left: 14px;
+      top: 18px;
+    }
+
+    .mark::after {
+      width: 6px;
+      height: 6px;
+      left: 8px;
+      top: 10px;
+      box-shadow: 10px -4px 0 var(--white), 20px 2px 0 var(--white);
+    }
+
+    .status {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    section {
+      padding: 64px 56px 54px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--coral);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: SimSun, "Songti SC", serif;
+      font-size: clamp(38px, 7vw, 62px);
+      font-weight: 700;
+      line-height: 1.16;
+    }
+
+    .lead {
+      max-width: 570px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 42px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .step {
+      min-height: 108px;
+      padding: 20px;
+      background: var(--white);
+    }
+
+    .step strong,
+    .step span { display: block; }
+
+    .step strong { font-size: 15px; }
+
+    .step span {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 18px 28px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 0; }
+      main { min-height: 100vh; border: 0; }
+      header { padding: 16px 20px; }
+      section { padding: 48px 24px 40px; }
+      .progress { grid-template-columns: 1fr; }
+      .step { min-height: 88px; }
+      footer { padding: 18px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="brand"><span class="mark" aria-hidden="true"></span>AnglePet</div>
+      <div class="status">ICP备案审核中</div>
+    </header>
+    <section>
+      <p class="eyebrow">SERVICE NOTICE</p>
+      <h1>我们正在完成<br>备案审核。</h1>
+      <p class="lead">AnglePet 的互联网信息服务暂时关闭。备案审核完成后，我们会尽快恢复宠物陪伴、长期记忆和微信连接服务。</p>
+      <div class="progress" aria-label="备案进度">
+        <div class="step"><strong>资料已提交</strong><span>备案信息已进入审核流程</span></div>
+        <div class="step"><strong>等待审核</strong><span>按监管流程完成核验</span></div>
+        <div class="step"><strong>审核后恢复</strong><span>正式服务将在合规后开放</span></div>
+      </div>
+    </section>
+    <footer>© 2026 AnglePet · 本页面不提供互联网信息服务</footer>
+  </main>
+</body>
+</html>
