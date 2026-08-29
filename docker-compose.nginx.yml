@@ -1,0 +1,12 @@
+services:
+  caddy:
+    profiles:
+      - caddy
+
+  frontend:
+    ports:
+      - "127.0.0.1:3200:3100"
+
+  backend:
+    ports:
+      - "127.0.0.1:8200:8000"

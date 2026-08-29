@@ -490,6 +490,20 @@ docker compose --env-file .env.production -f docker-compose.production.yml ps
 生产环境只在宿主机开放 `80/443`，前端、后端和 PostgreSQL 仅通过 Docker 内部网络通信。
 模型 API Key 可以在管理员界面配置，不要提交到 Git 仓库。
 
+如果服务器已有 Nginx 占用 `80/443`，使用附加配置将 AnglePet 绑定到本机端口：
+
+```bash
+docker compose --env-file .env.production \
+  -f docker-compose.production.yml \
+  -f docker-compose.nginx.yml up --build -d
+cp deploy/nginx-anglepet.conf /etc/nginx/sites-available/anglepet.top
+ln -s /etc/nginx/sites-available/anglepet.top /etc/nginx/sites-enabled/anglepet.top
+nginx -t && systemctl reload nginx
+```
+
+该模式不会启动 Caddy，前端和后端分别仅监听宿主机的 `127.0.0.1:3200` 与
+`127.0.0.1:8200`，由现有 Nginx 对外提供服务。
+
 ## 🔧 环境变量
 
 ### 后端 `backend/.env`
