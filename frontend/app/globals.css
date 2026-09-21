@@ -2867,6 +2867,14 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   font-size: 12px;
 }
 
+.footer-meta a {
+  transition: color .2s ease;
+}
+
+.footer-meta a:hover {
+  color: rgba(255,255,255,.78);
+}
+
 @media (max-width: 900px) {
   .trust-section,
   .faq-section {

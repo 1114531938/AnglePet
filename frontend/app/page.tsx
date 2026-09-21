@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { FilingLink } from "./public-chrome";
 
 const heroVideo =
   "https://videos.pexels.com/video-files/8489216/8489216-hd_1920_1080_30fps.mp4";
@@ -195,6 +196,7 @@ export default function Home() {
         </div>
         <div className="footer-meta">
           <span>© {new Date().getFullYear()} AnglePet</span>
+          <FilingLink />
           <span>AI 生成内容仅供陪伴与交流，请谨慎判断重要信息。</span>
         </div>
       </footer>

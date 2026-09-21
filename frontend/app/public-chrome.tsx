@@ -5,6 +5,18 @@ type PublicHeaderProps = {
   active?: "about" | "faq" | "pricing";
 };
 
+export function FilingLink() {
+  return (
+    <a
+      href="https://beian.miit.gov.cn/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      苏ICP备2026071040号-1
+    </a>
+  );
+}
+
 export function PublicHeader({ active }: PublicHeaderProps) {
   return (
     <nav className="topbar public-topbar">
@@ -48,6 +60,7 @@ export function PublicFooter() {
       </div>
       <div className="footer-meta">
         <span>© {new Date().getFullYear()} AnglePet</span>
+        <FilingLink />
         <span>AI 生成内容仅供陪伴与交流，请谨慎判断重要信息。</span>
       </div>
     </footer>
