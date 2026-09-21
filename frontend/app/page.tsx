@@ -10,14 +10,12 @@ import {
 } from "lucide-react";
 import { FilingLink } from "./public-chrome";
 
-const heroVideo =
-  "https://videos.pexels.com/video-files/8489216/8489216-hd_1920_1080_30fps.mp4";
+const heroVideo = "/landing/companion.mp4";
 
 const images = {
   hero: "/landing-hero.jpg",
-  room: "https://unsplash.com/photos/YPZ1pegsQVo/download?force=true&w=1600",
-  desk: "https://unsplash.com/photos/EV0IwJzQjE8/download?force=true&w=1600",
-  secure: "https://unsplash.com/photos/mxwEAI4pTGU/download?force=true&w=1800",
+  room: "/landing/pet-dialogue.jpg",
+  secure: "/landing/safety.jpg",
 };
 
 export default function Home() {
@@ -89,7 +87,7 @@ export default function Home() {
           </p>
         </div>
         <div className="device-panel">
-          <figure><img src={images.room} alt="AnglePet pet companion scene" /></figure>
+          <figure><img src={images.room} alt="AnglePet pet companion scene" loading="lazy" decoding="async" /></figure>
           <div className="device-content">
             <span>01 / Pet personality</span>
             <h3>每只宠物都有自己的性格。</h3>
@@ -166,7 +164,7 @@ export default function Home() {
           <Link href="/console" className="primary-btn">开始领养 <ArrowRight size={18} /></Link>
         </div>
         <div className="device-panel final-panel">
-          <figure><img src={images.secure} alt="AnglePet safe pet companion" /></figure>
+          <figure><img src={images.secure} alt="AnglePet safe pet companion" loading="lazy" decoding="async" /></figure>
           <div className="final-copy">
             <b>Private pet house</b>
             <span>你的宠物只属于你的账号，聊天记录和微信绑定都放在自己的宠物屋里。</span>

@@ -6,8 +6,7 @@ import { useState } from "react";
 import { ArrowRight, CheckCircle2, PawPrint, ShieldCheck } from "lucide-react";
 import { request, saveAuth } from "@/lib/api";
 
-const authVideo =
-  "https://videos.pexels.com/video-files/8489216/8489216-hd_1920_1080_30fps.mp4";
+const authVideo = "/landing/companion.mp4";
 
 export default function Login() {
   const [register, setRegister] = useState(false);
@@ -37,7 +36,16 @@ export default function Login() {
 
   return (
     <main className="auth-screen">
-      <video className="auth-video" src={authVideo} autoPlay muted loop playsInline />
+      <video
+        className="auth-video"
+        src={authVideo}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/landing-hero.jpg"
+      />
       <div className="auth-shade" />
       <Link href="/" className="brand auth-brand">
         <span className="brand-mark"><PawPrint size={19} /></span>

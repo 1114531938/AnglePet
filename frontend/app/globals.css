@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Serif+SC:wght@600;700&display=swap");
-
 :root {
   --ink: #16201c;
   --muted: #69756f;
@@ -703,7 +701,7 @@ img { max-width: 100%; display: block; }
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: url("https://unsplash.com/photos/mxwEAI4pTGU/download?force=true&w=1800") center/cover;
+  background: url("/landing/safety.jpg") center/cover;
 }
 .safety::after {
   content: "";
@@ -789,7 +787,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background: url("https://unsplash.com/photos/7PLGBedAjIw/download?force=true&w=1800") center/cover;
+  background: url("/landing/memory.jpg") center/cover;
   transform: scale(1.03);
 }
 .auth-shade {
@@ -1065,7 +1063,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   color: white;
   background:
     linear-gradient(90deg, rgba(7,16,13,.88), rgba(7,16,13,.55)),
-    url("https://unsplash.com/photos/7PLGBedAjIw/download?force=true&w=1600") center/cover;
+    url("/landing/memory.jpg") center/cover;
   box-shadow: 0 24px 70px rgba(22,32,28,.12);
   overflow: hidden;
 }
@@ -1549,7 +1547,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   .navlinks { display: none; }
   .hero { min-height: 1120px; padding: 118px 20px 470px; align-items: start; }
   .hero-shade { background: linear-gradient(180deg, rgba(11,23,19,.88), rgba(11,23,19,.54)); }
-  .hero h1 { font-size: clamp(64px, 21vw, 108px); }
+  .hero h1 { font-size: 82px; }
   .conversation-dock { bottom: 20px; grid-template-columns: 1fr; width: calc(100% - 24px); }
   .dock-card, .dock-chat { min-height: auto; padding: 20px; }
   .dock-chat { grid-template-columns: 1fr; }
@@ -1601,6 +1599,10 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   .msg p, .empty-chat { max-width: 92%; }
   .preset-hero { min-height: 220px; padding: 24px; }
   .preset-hero h2 { font-size: 34px; white-space: normal; }
+}
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 64px; }
 }
 
 /* Landing refinements */
@@ -2021,7 +2023,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   z-index: 0;
   opacity: .22;
   filter: saturate(.75) contrast(1.05);
-  background: url("https://unsplash.com/photos/YPZ1pegsQVo/download?force=true&w=1800") center/cover;
+  background: url("/landing/pet-dialogue.jpg") center/cover;
 }
 .showcase-section::after {
   content: "";
@@ -2040,13 +2042,13 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   z-index: 2;
 }
 .showcase-section.section-photo-room::before {
-  background-image: url("https://unsplash.com/photos/YPZ1pegsQVo/download?force=true&w=1800");
+  background-image: url("/landing/pet-dialogue.jpg");
 }
 .showcase-section.section-photo-desk::before {
-  background-image: url("https://unsplash.com/photos/EV0IwJzQjE8/download?force=true&w=1800");
+  background-image: url("/landing/wechat-desk.jpg");
 }
 .showcase-section.section-photo-secure::before {
-  background-image: url("https://unsplash.com/photos/mxwEAI4pTGU/download?force=true&w=1800");
+  background-image: url("/landing/safety.jpg");
 }
 .showcase-section.alt {
   background:
@@ -2267,7 +2269,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: url("https://unsplash.com/photos/7PLGBedAjIw/download?force=true&w=1800") center/cover;
+  background: url("/landing/memory.jpg") center/cover;
   opacity: .34;
   filter: saturate(.82) contrast(1.05);
 }
