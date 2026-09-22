@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { FilingLink } from "./public-chrome";
+import { LandingScroll } from "./landing-scroll";
 
 const images = {
   hero: "/landing/hero-editorial.webp",
@@ -19,6 +20,7 @@ const images = {
 export default function Home() {
   return (
     <main className="site">
+      <LandingScroll />
       <nav className="topbar">
         <Link href="/" className="brand">
           <span className="brand-mark"><PawPrint size={19} /></span>

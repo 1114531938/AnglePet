@@ -4432,3 +4432,30 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   .site .hero-statement { font-size: 23px; }
   .site .hero-lead { display: none; }
 }
+
+.site > .journey,
+.site > .site-footer { scroll-margin-top: 74px; }
+
+@media (max-width: 900px) {
+  .site > .journey,
+  .site > .showcase-section,
+  .site > .site-footer { scroll-margin-top: 66px; }
+}
+
+@media (max-width: 600px) {
+  .site > .journey,
+  .site > .showcase-section,
+  .site > .site-footer { scroll-margin-top: 62px; }
+}
+
+@media (max-width: 900px) {
+  html:has(.site) { scroll-snap-type: y mandatory; }
+  .site > .hero,
+  .site > .journey,
+  .site > .showcase-section,
+  .site > .site-footer { scroll-snap-align: start; scroll-snap-stop: always; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.site) { scroll-behavior: auto; }
+}
