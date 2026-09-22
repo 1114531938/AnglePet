@@ -10,11 +10,9 @@ import {
 } from "lucide-react";
 import { FilingLink } from "./public-chrome";
 
-const heroVideo = "/landing/companion.mp4";
-
 const images = {
-  hero: "/landing-hero.jpg",
-  room: "/landing/pet-dialogue.jpg",
+  hero: "/landing/hero-editorial.webp",
+  room: "/landing/pet-portrait.webp",
   secure: "/landing/safety.jpg",
 };
 
@@ -37,45 +35,41 @@ export default function Home() {
       </nav>
 
       <section className="hero">
-        <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline preload="metadata" poster={images.hero} />
+        <img className="hero-image" src={images.hero} alt="人与宠物在家中相伴" fetchPriority="high" />
         <div className="hero-shade" />
         <div className="hero-copy">
-          <p className="kicker"><Sparkles size={15} /> Pet companion in WeChat</p>
+          <p className="kicker"><Sparkles size={15} /> A companion that remembers</p>
           <h1>AnglePet</h1>
+          <p className="hero-statement">一只会记得你的宠物，<br />住进每天的聊天里。</p>
           <p className="hero-lead">
-            把一只会说话、会记得你、能在微信里陪你的数字宠物带回家。
-            它会用自己的性格回应你，也会记住你们每天的小事。
+            赋予它名字与性格。在网页或微信里分享日常，
+            让每一次回应都延续你们之间的故事。
           </p>
           <div className="hero-actions">
             <Link href="/console" className="primary-btn">
-              领养我的 AnglePet <ArrowRight size={18} />
+              开始领养 <ArrowRight size={18} />
             </Link>
-            <a href="#product" className="secondary-btn">看看它会怎么陪你</a>
+            <a href="#product" className="secondary-btn">了解 AnglePet <ArrowRight size={17} /></a>
           </div>
         </div>
+      </section>
 
-        <div className="connection-strip" aria-label="Pet companion preview">
-          <div className="strip-intro">
-            <span>ALWAYS WITH YOU</span>
-            <b>微信里的宠物陪伴</b>
-            <small>扫码后，你的 AnglePet 会像联系人一样出现在微信里。</small>
-          </div>
-          <div className="strip-flow">
-            <div><PawPrint size={20} /><b>领养</b><small>设定名字和性格</small></div>
-            <div><HeartHandshake size={20} /><b>熟悉</b><small>记住你们的关系</small></div>
-            <div><MessageCircle size={20} /><b>陪聊</b><small>微信里持续回应</small></div>
-            <div><Sparkles size={20} /><b>成长</b><small>随着对话更懂你</small></div>
-          </div>
-          <div className="strip-chat">
-            <span className="pet-avatar">喵</span>
-            <p>“你回来啦。今天也要摸摸我吗？”</p>
-          </div>
+      <section className="journey" aria-label="AnglePet 陪伴方式">
+        <div className="journey-heading">
+          <span>01 — 04 / THE COMPANIONSHIP</span>
+          <p>从第一次见面，到成为日常。</p>
+        </div>
+        <div className="journey-steps">
+          <div><PawPrint size={21} /><span>01</span><b>领养</b><small>给它名字和独特性格</small></div>
+          <div><HeartHandshake size={21} /><span>02</span><b>熟悉</b><small>记住你们的关系</small></div>
+          <div><MessageCircle size={21} /><span>03</span><b>陪聊</b><small>在微信里继续对话</small></div>
+          <div><Sparkles size={21} /><span>04</span><b>成长</b><small>让相处慢慢有了默契</small></div>
         </div>
       </section>
 
       <section className="showcase-section section-photo-room" id="product">
         <div className="showcase-copy">
-          <p className="kicker">Pet dialogue</p>
+          <p className="kicker">01 / A personality of its own</p>
           <h2 className="headline-lines">
             <span>不是工具，</span>
             <span>是一只会回应</span>
@@ -87,7 +81,7 @@ export default function Home() {
           </p>
         </div>
         <div className="device-panel">
-          <figure><img src={images.room} alt="AnglePet pet companion scene" loading="lazy" decoding="async" /></figure>
+          <figure><img src={images.room} alt="宠物与主人在家中亲近相伴" loading="lazy" decoding="async" /></figure>
           <div className="device-content">
             <span>01 / Pet personality</span>
             <h3>每只宠物都有自己的性格。</h3>
@@ -98,7 +92,7 @@ export default function Home() {
 
       <section className="showcase-section memory-photo" id="memory">
         <div className="showcase-copy">
-          <p className="kicker">Daily memory</p>
+          <p className="kicker">02 / A shared memory</p>
           <h2 className="headline-lines">
             <span>记住你们之间的</span>
             <span>小习惯。</span>
@@ -131,7 +125,7 @@ export default function Home() {
 
       <section className="showcase-section section-photo-desk" id="bridge">
         <div className="showcase-copy">
-          <p className="kicker">WeChat companion</p>
+          <p className="kicker">03 / Always within reach</p>
           <h2 className="headline-lines">
             <span>让宠物住进</span>
             <span>你的微信。</span>
@@ -152,7 +146,7 @@ export default function Home() {
 
       <section className="showcase-section section-photo-secure" id="safety-story">
         <div className="showcase-copy">
-          <p className="kicker"><ShieldCheck size={15} /> Safe companion</p>
+          <p className="kicker"><ShieldCheck size={15} /> 04 / Yours, and yours alone</p>
           <h2 className="headline-lines">
             <span>温柔陪伴，</span>
             <span>也要安全可控。</span>
