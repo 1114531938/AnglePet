@@ -4439,37 +4439,43 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
 .companion-chapter + .showcase-section { border-top: 1px solid #d7dfd9; }
 
 @media (min-width: 901px) {
-  .site > .hero,
-  .site > [data-scroll-page]:not(.hero) { height: calc(100svh - 74px); }
+  .site > [data-scroll-page] { height: calc(100svh - 74px); }
 
-  .site > [data-scroll-page]:not(.hero) { min-height: 590px; }
+  .site > [data-scroll-page] { min-height: 590px; }
 
-  .site .hero {
-    min-height: 590px;
-    padding-block: clamp(48px, 7svh, 76px);
-  }
-
-  .companion-chapter {
+  .hero-chapter {
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
     overflow: hidden;
     background: #f5f7f3;
   }
 
-  .companion-chapter .journey {
-    padding: clamp(26px, 3.5svh, 40px) max(48px, calc((100vw - 1280px) / 2)) clamp(24px, 3svh, 34px);
+  .site .hero-chapter .hero {
+    height: 100%;
+    min-height: 0;
+    padding-block: clamp(42px, 5.5svh, 62px);
   }
 
-  .companion-chapter .journey-heading p { font-size: 19px; }
-  .companion-chapter .journey-steps { margin-top: 17px; }
-  .companion-chapter .journey-steps > div {
-    min-height: 78px;
-    padding-top: 13px;
-    grid-template-rows: 25px auto auto;
-    gap: 6px 8px;
+  .companion-chapter {
+    display: block;
+    overflow: hidden;
+    background: #f5f7f3;
   }
-  .companion-chapter .journey-steps b { font-size: 16px; }
-  .companion-chapter .journey-steps small { font-size: 12px; }
+
+  .hero-chapter .journey {
+    padding: clamp(20px, 2.5svh, 28px) max(48px, calc((100vw - 1280px) / 2)) clamp(18px, 2.2svh, 24px);
+  }
+
+  .hero-chapter .journey-heading p { font-size: 18px; }
+  .hero-chapter .journey-steps { margin-top: 12px; }
+  .hero-chapter .journey-steps > div {
+    min-height: 68px;
+    padding-top: 10px;
+    grid-template-rows: 22px auto auto;
+    gap: 4px 8px;
+  }
+  .hero-chapter .journey-steps b { font-size: 15px; }
+  .hero-chapter .journey-steps small { font-size: 11px; }
 
   .site .companion-chapter #product {
     height: 100%;
@@ -4477,8 +4483,8 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
     padding-block: clamp(28px, 4svh, 46px);
   }
   .companion-chapter #product .showcase-copy h2.headline-lines {
-    margin: 17px 0;
-    font-size: clamp(36px, 3vw, 50px);
+    margin: 22px 0;
+    font-size: clamp(42px, 3.6vw, 56px);
   }
   .companion-chapter #product .showcase-copy p:not(.kicker) {
     font-size: 15px;
@@ -4486,7 +4492,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   }
   .companion-chapter #product .device-panel { align-self: center; }
   .companion-chapter #product .device-panel figure {
-    height: clamp(180px, 26svh, 310px);
+    height: clamp(250px, 36svh, 400px);
     aspect-ratio: auto;
   }
   .companion-chapter #product .device-content { padding-top: 14px; }

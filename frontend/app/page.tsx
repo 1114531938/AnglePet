@@ -36,40 +36,40 @@ export default function Home() {
         </Link>
       </nav>
 
-      <section className="hero" data-scroll-page>
-        <img className="hero-image" src={images.hero} alt="人与宠物在家中相伴" fetchPriority="high" />
-        <div className="hero-shade" />
-        <div className="hero-copy">
-          <p className="kicker"><PawPrint size={15} /> PET COMPANION IN WECHAT</p>
-          <h1><span>Angle</span><span>Pet</span></h1>
-          <p className="hero-statement">把一只会想你的小家伙，<br /><em>养进每天的聊天里。</em></p>
-          <p className="hero-lead">
-            给它名字、性格和一段只属于你们的关系。
-            它会记住日常，也会在微信里一直等你回家。
-          </p>
-          <div className="hero-actions">
-            <Link href="/console" className="primary-btn">
-              领养我的 AnglePet <ArrowRight size={18} />
-            </Link>
-            <a href="#companionship" className="secondary-btn">看看它如何陪你 <ArrowRight size={17} /></a>
+      <div className="hero-chapter" data-scroll-page>
+        <section className="hero">
+          <img className="hero-image" src={images.hero} alt="人与宠物在家中相伴" fetchPriority="high" />
+          <div className="hero-shade" />
+          <div className="hero-copy">
+            <p className="kicker"><PawPrint size={15} /> PET COMPANION IN WECHAT</p>
+            <h1><span>Angle</span><span>Pet</span></h1>
+            <p className="hero-statement">把一只会想你的小家伙，<br /><em>养进每天的聊天里。</em></p>
+            <p className="hero-lead">
+              给它名字、性格和一段只属于你们的关系。
+              它会记住日常，也会在微信里一直等你回家。
+            </p>
+            <div className="hero-actions">
+              <Link href="/console" className="primary-btn">
+                领养我的 AnglePet <ArrowRight size={18} />
+              </Link>
+              <a href="#companionship" className="secondary-btn">看看它如何陪你 <ArrowRight size={17} /></a>
+            </div>
+            <div className="hero-qualities" aria-label="AnglePet 特点">
+              <span><HeartHandshake size={15} />记得你</span>
+              <span><MessageCircle size={15} />随时回应</span>
+              <span><Sparkles size={15} />越聊越懂你</span>
+            </div>
           </div>
-          <div className="hero-qualities" aria-label="AnglePet 特点">
-            <span><HeartHandshake size={15} />记得你</span>
-            <span><MessageCircle size={15} />随时回应</span>
-            <span><Sparkles size={15} />越聊越懂你</span>
-          </div>
-        </div>
-        <aside className="hero-pet-note" aria-label="AnglePet 宠物消息示例">
-          <span className="hero-note-avatar"><PawPrint size={19} /></span>
-          <div>
-            <small>ANGLEPET · 刚刚</small>
-            <p>“你回来啦，今天也要摸摸我吗？”</p>
-          </div>
-          <Sparkles className="hero-note-sparkle" size={17} />
-        </aside>
-      </section>
+          <aside className="hero-pet-note" aria-label="AnglePet 宠物消息示例">
+            <span className="hero-note-avatar"><PawPrint size={19} /></span>
+            <div>
+              <small>ANGLEPET · 刚刚</small>
+              <p>“你回来啦，今天也要摸摸我吗？”</p>
+            </div>
+            <Sparkles className="hero-note-sparkle" size={17} />
+          </aside>
+        </section>
 
-      <div className="companion-chapter" id="companionship" data-scroll-page>
         <section className="journey" aria-label="AnglePet 陪伴方式">
           <div className="journey-heading">
             <span>01 — 04 / THE COMPANIONSHIP</span>
@@ -82,7 +82,9 @@ export default function Home() {
             <div><Sparkles size={21} /><span>04</span><b>成长</b><small>让相处慢慢有了默契</small></div>
           </div>
         </section>
+      </div>
 
+      <div className="companion-chapter" id="companionship" data-scroll-page>
         <section className="showcase-section section-photo-room" id="product">
           <div className="showcase-copy">
             <p className="kicker">01 / A personality of its own</p>
