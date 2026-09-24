@@ -163,54 +163,56 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="showcase-section section-photo-secure" id="safety-story" data-scroll-page>
-        <div className="showcase-copy">
-          <p className="kicker"><ShieldCheck size={15} /> 04 / Yours, and yours alone</p>
-          <h2 className="headline-lines">
-            <span>温柔陪伴，</span>
-            <span>也要安全可控。</span>
-          </h2>
-          <p>
-            AnglePet 不做 Hook、模拟点击或 PC 微信自动化。微信模式基于官方允许的
-            openclaw-weixin / iLink 协议，并把你的宠物、会话和绑定信息隔离保存。
-          </p>
-          <Link href="/console" className="primary-btn">开始领养 <ArrowRight size={18} /></Link>
-        </div>
-        <div className="device-panel final-panel">
-          <figure><img src={images.secure} alt="AnglePet safe pet companion" loading="lazy" decoding="async" /></figure>
-          <div className="final-copy">
-            <b>Private pet house</b>
-            <span>你的宠物只属于你的账号，聊天记录和微信绑定都放在自己的宠物屋里。</span>
+      <div className="final-chapter" data-scroll-page>
+        <section className="showcase-section section-photo-secure" id="safety-story">
+          <div className="showcase-copy">
+            <p className="kicker"><ShieldCheck size={15} /> 04 / Yours, and yours alone</p>
+            <h2 className="headline-lines">
+              <span>温柔陪伴，</span>
+              <span>也要安全可控。</span>
+            </h2>
+            <p>
+              AnglePet 不做 Hook、模拟点击或 PC 微信自动化。微信模式基于官方允许的
+              openclaw-weixin / iLink 协议，并把你的宠物、会话和绑定信息隔离保存。
+            </p>
+            <Link href="/console" className="primary-btn">开始领养 <ArrowRight size={18} /></Link>
           </div>
-        </div>
-      </section>
-
-      <footer className="site-footer">
-        <div className="footer-main">
-          <div className="footer-brand">
-            <span className="brand-mark"><PawPrint size={19} /></span>
-            <div>
-              <b>AnglePet</b>
-              <p>把一只懂你的宠物，留在每天都会打开的微信里。</p>
+          <div className="device-panel final-panel">
+            <figure><img src={images.secure} alt="AnglePet safe pet companion" loading="lazy" decoding="async" /></figure>
+            <div className="final-copy">
+              <b>Private pet house</b>
+              <span>你的宠物只属于你的账号，聊天记录和微信绑定都放在自己的宠物屋里。</span>
             </div>
           </div>
-          <div className="footer-links">
-            <a href="#companionship">宠物陪伴</a>
-            <a href="#memory">长期记忆</a>
-            <Link href="/about">安全与合规</Link>
-            <Link href="/faq">常见问题</Link>
-            <Link href="/pricing">价格方案</Link>
+        </section>
+
+        <footer className="site-footer">
+          <div className="footer-main">
+            <div className="footer-brand">
+              <span className="brand-mark"><PawPrint size={19} /></span>
+              <div>
+                <b>AnglePet</b>
+                <p>把一只懂你的宠物，留在每天都会打开的微信里。</p>
+              </div>
+            </div>
+            <div className="footer-links">
+              <a href="#companionship">宠物陪伴</a>
+              <a href="#memory">长期记忆</a>
+              <Link href="/about">安全与合规</Link>
+              <Link href="/faq">常见问题</Link>
+              <Link href="/pricing">价格方案</Link>
+            </div>
+            <Link href="/console" className="footer-cta">
+              进入宠物屋 <ArrowRight size={18} />
+            </Link>
           </div>
-          <Link href="/console" className="footer-cta">
-            进入宠物屋 <ArrowRight size={18} />
-          </Link>
-        </div>
-        <div className="footer-meta">
-          <span>© {new Date().getFullYear()} AnglePet</span>
-          <FilingLink />
-          <span>AI 生成内容仅供陪伴与交流，请谨慎判断重要信息。</span>
-        </div>
-      </footer>
+          <div className="footer-meta">
+            <span>© {new Date().getFullYear()} AnglePet</span>
+            <FilingLink />
+            <span>AI 生成内容仅供陪伴与交流，请谨慎判断重要信息。</span>
+          </div>
+        </footer>
+      </div>
     </main>
   );
 }
