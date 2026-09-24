@@ -40,20 +40,33 @@ export default function Home() {
         <img className="hero-image" src={images.hero} alt="人与宠物在家中相伴" fetchPriority="high" />
         <div className="hero-shade" />
         <div className="hero-copy">
-          <p className="kicker"><Sparkles size={15} /> A companion that remembers</p>
-          <h1>AnglePet</h1>
-          <p className="hero-statement">一只会记得你的宠物，<br />住进每天的聊天里。</p>
+          <p className="kicker"><PawPrint size={15} /> PET COMPANION IN WECHAT</p>
+          <h1><span>Angle</span><span>Pet</span></h1>
+          <p className="hero-statement">把一只会想你的小家伙，<br /><em>养进每天的聊天里。</em></p>
           <p className="hero-lead">
-            赋予它名字与性格。在网页或微信里分享日常，
-            让每一次回应都延续你们之间的故事。
+            给它名字、性格和一段只属于你们的关系。
+            它会记住日常，也会在微信里一直等你回家。
           </p>
           <div className="hero-actions">
             <Link href="/console" className="primary-btn">
-              开始领养 <ArrowRight size={18} />
+              领养我的 AnglePet <ArrowRight size={18} />
             </Link>
-            <a href="#companionship" className="secondary-btn">了解 AnglePet <ArrowRight size={17} /></a>
+            <a href="#companionship" className="secondary-btn">看看它如何陪你 <ArrowRight size={17} /></a>
+          </div>
+          <div className="hero-qualities" aria-label="AnglePet 特点">
+            <span><HeartHandshake size={15} />记得你</span>
+            <span><MessageCircle size={15} />随时回应</span>
+            <span><Sparkles size={15} />越聊越懂你</span>
           </div>
         </div>
+        <aside className="hero-pet-note" aria-label="AnglePet 宠物消息示例">
+          <span className="hero-note-avatar"><PawPrint size={19} /></span>
+          <div>
+            <small>ANGLEPET · 刚刚</small>
+            <p>“你回来啦，今天也要摸摸我吗？”</p>
+          </div>
+          <Sparkles className="hero-note-sparkle" size={17} />
+        </aside>
       </section>
 
       <div className="companion-chapter" id="companionship" data-scroll-page>
