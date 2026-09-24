@@ -27,7 +27,7 @@ export default function Home() {
           <span>AnglePet</span>
         </Link>
         <div className="navlinks">
-          <a href="#product">陪伴</a>
+          <a href="#companionship">陪伴</a>
           <Link href="/faq">常见问题</Link>
           <Link href="/pricing">价格</Link>
         </div>
@@ -36,7 +36,7 @@ export default function Home() {
         </Link>
       </nav>
 
-      <section className="hero">
+      <section className="hero" data-scroll-page>
         <img className="hero-image" src={images.hero} alt="人与宠物在家中相伴" fetchPriority="high" />
         <div className="hero-shade" />
         <div className="hero-copy">
@@ -51,48 +51,50 @@ export default function Home() {
             <Link href="/console" className="primary-btn">
               开始领养 <ArrowRight size={18} />
             </Link>
-            <a href="#product" className="secondary-btn">了解 AnglePet <ArrowRight size={17} /></a>
+            <a href="#companionship" className="secondary-btn">了解 AnglePet <ArrowRight size={17} /></a>
           </div>
         </div>
       </section>
 
-      <section className="journey" aria-label="AnglePet 陪伴方式">
-        <div className="journey-heading">
-          <span>01 — 04 / THE COMPANIONSHIP</span>
-          <p>从第一次见面，到成为日常。</p>
-        </div>
-        <div className="journey-steps">
-          <div><PawPrint size={21} /><span>01</span><b>领养</b><small>给它名字和独特性格</small></div>
-          <div><HeartHandshake size={21} /><span>02</span><b>熟悉</b><small>记住你们的关系</small></div>
-          <div><MessageCircle size={21} /><span>03</span><b>陪聊</b><small>在微信里继续对话</small></div>
-          <div><Sparkles size={21} /><span>04</span><b>成长</b><small>让相处慢慢有了默契</small></div>
-        </div>
-      </section>
-
-      <section className="showcase-section section-photo-room" id="product">
-        <div className="showcase-copy">
-          <p className="kicker">01 / A personality of its own</p>
-          <h2 className="headline-lines">
-            <span>不是工具，</span>
-            <span>是一只会回应</span>
-            <span>你的宠物。</span>
-          </h2>
-          <p>
-            你可以为它设定名字、物种、脾气、亲密关系和说话方式。
-            它会用宠物的口吻陪你聊天，而不是像冷冰冰的助手一样回答问题。
-          </p>
-        </div>
-        <div className="device-panel">
-          <figure><img src={images.room} alt="宠物与主人在家中亲近相伴" loading="lazy" decoding="async" /></figure>
-          <div className="device-content">
-            <span>01 / Pet personality</span>
-            <h3>每只宠物都有自己的性格。</h3>
-            <p>黏人、傲娇、安静、活泼，AnglePet 会按你设定的宠物性格表达情绪和回应。</p>
+      <div className="companion-chapter" id="companionship" data-scroll-page>
+        <section className="journey" aria-label="AnglePet 陪伴方式">
+          <div className="journey-heading">
+            <span>01 — 04 / THE COMPANIONSHIP</span>
+            <p>从第一次见面，到成为日常。</p>
           </div>
-        </div>
-      </section>
+          <div className="journey-steps">
+            <div><PawPrint size={21} /><span>01</span><b>领养</b><small>给它名字和独特性格</small></div>
+            <div><HeartHandshake size={21} /><span>02</span><b>熟悉</b><small>记住你们的关系</small></div>
+            <div><MessageCircle size={21} /><span>03</span><b>陪聊</b><small>在微信里继续对话</small></div>
+            <div><Sparkles size={21} /><span>04</span><b>成长</b><small>让相处慢慢有了默契</small></div>
+          </div>
+        </section>
 
-      <section className="showcase-section memory-photo" id="memory">
+        <section className="showcase-section section-photo-room" id="product">
+          <div className="showcase-copy">
+            <p className="kicker">01 / A personality of its own</p>
+            <h2 className="headline-lines">
+              <span>不是工具，</span>
+              <span>是一只会回应</span>
+              <span>你的宠物。</span>
+            </h2>
+            <p>
+              你可以为它设定名字、物种、脾气、亲密关系和说话方式。
+              它会用宠物的口吻陪你聊天，而不是像冷冰冰的助手一样回答问题。
+            </p>
+          </div>
+          <div className="device-panel">
+            <figure><img src={images.room} alt="宠物与主人在家中亲近相伴" loading="lazy" decoding="async" /></figure>
+            <div className="device-content">
+              <span>01 / Pet personality</span>
+              <h3>每只宠物都有自己的性格。</h3>
+              <p>黏人、傲娇、安静、活泼，AnglePet 会按你设定的宠物性格表达情绪和回应。</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section className="showcase-section memory-photo" id="memory" data-scroll-page>
         <div className="showcase-copy">
           <p className="kicker">02 / A shared memory</p>
           <h2 className="headline-lines">
@@ -125,7 +127,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="showcase-section section-photo-desk" id="bridge">
+      <section className="showcase-section section-photo-desk" id="bridge" data-scroll-page>
         <div className="showcase-copy">
           <p className="kicker">03 / Always within reach</p>
           <h2 className="headline-lines">
@@ -146,7 +148,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="showcase-section section-photo-secure" id="safety-story">
+      <section className="showcase-section section-photo-secure" id="safety-story" data-scroll-page>
         <div className="showcase-copy">
           <p className="kicker"><ShieldCheck size={15} /> 04 / Yours, and yours alone</p>
           <h2 className="headline-lines">
@@ -178,7 +180,7 @@ export default function Home() {
             </div>
           </div>
           <div className="footer-links">
-            <a href="#product">宠物陪伴</a>
+            <a href="#companionship">宠物陪伴</a>
             <a href="#memory">长期记忆</a>
             <Link href="/about">安全与合规</Link>
             <Link href="/faq">常见问题</Link>

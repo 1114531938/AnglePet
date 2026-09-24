@@ -4433,26 +4433,91 @@ input:focus, textarea:focus, select:focus { border-color: var(--green); box-shad
   .site .hero-lead { display: none; }
 }
 
-.site > .journey,
+.site > [data-scroll-page],
 .site > .site-footer { scroll-margin-top: 74px; }
 
+.companion-chapter + .showcase-section { border-top: 1px solid #d7dfd9; }
+
+@media (min-width: 901px) {
+  .site > .hero,
+  .site > [data-scroll-page]:not(.hero) { height: calc(100svh - 74px); }
+
+  .site > [data-scroll-page]:not(.hero) { min-height: 590px; }
+
+  .site .hero {
+    min-height: 590px;
+    padding-block: clamp(48px, 7svh, 76px);
+  }
+
+  .companion-chapter {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+    background: #f5f7f3;
+  }
+
+  .companion-chapter .journey {
+    padding: clamp(26px, 3.5svh, 40px) max(48px, calc((100vw - 1280px) / 2)) clamp(24px, 3svh, 34px);
+  }
+
+  .companion-chapter .journey-heading p { font-size: 19px; }
+  .companion-chapter .journey-steps { margin-top: 17px; }
+  .companion-chapter .journey-steps > div {
+    min-height: 78px;
+    padding-top: 13px;
+    grid-template-rows: 25px auto auto;
+    gap: 6px 8px;
+  }
+  .companion-chapter .journey-steps b { font-size: 16px; }
+  .companion-chapter .journey-steps small { font-size: 12px; }
+
+  .site .companion-chapter #product {
+    height: 100%;
+    min-height: 0;
+    padding-block: clamp(28px, 4svh, 46px);
+  }
+  .companion-chapter #product .showcase-copy h2.headline-lines {
+    margin: 17px 0;
+    font-size: clamp(36px, 3vw, 50px);
+  }
+  .companion-chapter #product .showcase-copy p:not(.kicker) {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .companion-chapter #product .device-panel { align-self: center; }
+  .companion-chapter #product .device-panel figure {
+    height: clamp(180px, 26svh, 310px);
+    aspect-ratio: auto;
+  }
+  .companion-chapter #product .device-content { padding-top: 14px; }
+  .companion-chapter #product .device-content h3 {
+    margin: 8px 0 5px;
+    font-size: clamp(21px, 1.8vw, 26px);
+  }
+  .companion-chapter #product .device-content p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .site > .showcase-section {
+    min-height: 590px;
+    padding-block: clamp(40px, 6svh, 70px);
+  }
+}
+
 @media (max-width: 900px) {
-  .site > .journey,
-  .site > .showcase-section,
+  .site > [data-scroll-page],
   .site > .site-footer { scroll-margin-top: 66px; }
 }
 
 @media (max-width: 600px) {
-  .site > .journey,
-  .site > .showcase-section,
+  .site > [data-scroll-page],
   .site > .site-footer { scroll-margin-top: 62px; }
 }
 
 @media (max-width: 900px) {
-  html:has(.site) { scroll-snap-type: y mandatory; }
-  .site > .hero,
-  .site > .journey,
-  .site > .showcase-section,
+  html:has(.site) { scroll-snap-type: y proximity; }
+  .site > [data-scroll-page],
   .site > .site-footer { scroll-snap-align: start; scroll-snap-stop: always; }
 }
 

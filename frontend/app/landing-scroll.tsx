@@ -9,7 +9,7 @@ export function LandingScroll() {
     if (!site || !topbar) return;
 
     const sections = Array.from(
-      site.querySelectorAll<HTMLElement>(":scope > .hero, :scope > .journey, :scope > .showcase-section, :scope > .site-footer"),
+      site.querySelectorAll<HTMLElement>(":scope > [data-scroll-page], :scope > .site-footer"),
     );
     const finePointer = window.matchMedia("(pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -33,14 +33,10 @@ export function LandingScroll() {
       );
       const current = Math.max(0, targets.findLastIndex((top) => top <= window.scrollY + 40));
       const direction = Math.sign(event.deltaY);
-      const bounds = sections[current].getBoundingClientRect();
       const next = direction > 0
         ? Math.min(current + 1, sections.length - 1)
         : window.scrollY - targets[current] > 60 ? current : Math.max(current - 1, 0);
-      const remaining = bounds.bottom - window.innerHeight;
-      const target = direction > 0 && current > 0 && current < sections.length - 1 && remaining > 32
-        ? Math.min(maxScroll, window.scrollY + Math.min(remaining, window.innerHeight - navHeight - 80))
-        : targets[next];
+      const target = targets[next];
       if (Math.abs(target - window.scrollY) < 1) return;
 
       event.preventDefault();
